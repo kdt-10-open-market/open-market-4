@@ -1637,6 +1637,156 @@ window.location.href = "order.html";
 // 3. 모달 표시 ("장바구니에 담았습니다")
 ```
 
+**탭 UI 구현 (상세정보/리뷰/Q&A 등)**
+
+HTML 구조 - ARIA 속성으로 접근성 확보:
+
+```html
+<!-- 탭 메뉴 -->
+<div class="tab-menu" role="tablist" aria-label="상품 정보 탭">
+  <button
+    class="tab-button active"
+    data-tab="detail"
+    role="tab"
+    aria-selected="true"
+    aria-controls="detail-content"
+    tabindex="0"
+  >
+    상세정보
+  </button>
+  <button
+    class="tab-button"
+    data-tab="review"
+    role="tab"
+    aria-selected="false"
+    aria-controls="review-content"
+    tabindex="-1"
+  >
+    리뷰
+  </button>
+</div>
+
+<!-- 탭 컨텐츠 -->
+<div class="tab-content-wrapper">
+  <div
+    class="tab-content active"
+    id="detail-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    상세 정보 내용
+  </div>
+  <div
+    class="tab-content"
+    id="review-content"
+    role="tabpanel"
+    tabindex="0"
+    hidden
+  >
+    리뷰 내용
+  </div>
+</div>
+```
+
+JavaScript - 탭 전환 및 키보드 네비게이션:
+
+```javascript
+const tabButtons = document.querySelectorAll(".tab-button");
+const tabContents = document.querySelectorAll(".tab-content");
+
+// 탭 활성화 함수
+function activateTab(button) {
+  const tabName = button.getAttribute("data-tab");
+
+  // 모든 탭 비활성화
+  tabButtons.forEach((btn) => {
+    btn.classList.remove("active");
+    btn.setAttribute("aria-selected", "false");
+    btn.setAttribute("tabindex", "-1");
+  });
+
+  tabContents.forEach((content) => {
+    content.classList.remove("active");
+    content.setAttribute("hidden", "");
+  });
+
+  // 선택된 탭 활성화
+  button.classList.add("active");
+  button.setAttribute("aria-selected", "true");
+  button.setAttribute("tabindex", "0");
+  button.focus();
+
+  const targetContent = document.getElementById(`${tabName}-content`);
+  targetContent.classList.add("active");
+  targetContent.removeAttribute("hidden");
+}
+
+// 클릭 이벤트
+tabButtons.forEach((button) => {
+  button.addEventListener("click", () => activateTab(button));
+});
+
+// 키보드 네비게이션
+tabButtons.forEach((button, index) => {
+  button.addEventListener("keydown", (e) => {
+    let targetIndex;
+
+    switch (e.key) {
+      case "ArrowLeft": // 이전 탭
+        e.preventDefault();
+        targetIndex = index === 0 ? tabButtons.length - 1 : index - 1;
+        activateTab(tabButtons[targetIndex]);
+        break;
+
+      case "ArrowRight": // 다음 탭
+        e.preventDefault();
+        targetIndex = index === tabButtons.length - 1 ? 0 : index + 1;
+        activateTab(tabButtons[targetIndex]);
+        break;
+
+      case "Home": // 첫 번째 탭
+        e.preventDefault();
+        activateTab(tabButtons[0]);
+        break;
+
+      case "End": // 마지막 탭
+        e.preventDefault();
+        activateTab(tabButtons[tabButtons.length - 1]);
+        break;
+    }
+  });
+});
+```
+
+CSS - 마우스 클릭 시 포커스 테두리 제거:
+
+```css
+/* 기본 포커스 제거 */
+.tab-button:focus {
+  outline: none;
+}
+
+/* 키보드 네비게이션 시에만 포커스 표시 */
+.tab-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+.tab-button.active {
+  border-bottom: 3px solid var(--color-primary);
+}
+```
+
+**핵심 포인트:**
+
+- ✅ `role="tablist"`, `role="tab"`, `role="tabpanel"` - 스크린 리더 지원
+- ✅ `aria-selected`, `aria-controls` - 탭 상태 명시
+- ✅ `tabindex` - 키보드 포커스 관리 (활성 탭: 0, 비활성 탭: -1)
+- ✅ `hidden` 속성 - 비활성 컨텐츠 숨김
+- ✅ 화살표 키 (←/→) - 탭 간 이동 (순환)
+- ✅ `Home`/`End` 키 - 처음/끝 탭으로 바로 이동
+- ✅ `:focus-visible` - 키보드 사용 시에만 포커스 표시
+
 #### 5. 장바구니 페이지 (cart.html)
 
 ```javascript
