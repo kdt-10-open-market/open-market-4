@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "http-server ./web -p 8080 -c-1 --cors",
-    "start": "nodemon server/server.js NODE_ENV=development"
+    "start": "cross-env NODE_ENV=development nodemon server/server.js"
   },
   "dependencies": {
     "express": "^5.1.0",
@@ -19,6 +19,7 @@
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "http-server": "^14.1.1",
     "nodemon": "^3.1.11"
   }
