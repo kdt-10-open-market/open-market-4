@@ -3,6 +3,7 @@ const Validation = {
     let inputElements;
     if (!Array.isArray(_inputElements)) inputElements = [_inputElements];
     else inputElements = [..._inputElements];
+
     inputElements.forEach(e => e.classList.remove("error", "success"));
     messageElement.classList.remove("error", "success");
     messageElement.classList.add("hidden");
@@ -16,8 +17,12 @@ const Validation = {
     messageElement.textContent = message;
   },
 
-  clearMessage(inputElement, messageElement) {
-    inputElement.classList.remove("error", "success");
+  clearMessage(_inputElements, messageElement) {
+    let inputElements;
+    if (!Array.isArray(_inputElements)) inputElements = [_inputElements];
+    else inputElements = [..._inputElements];
+
+    inputElements.forEach(e => e.classList.remove("error", "success"));
     messageElement.classList.remove("error", "success");
     messageElement.classList.add("hidden");
     messageElement.textContent = "";

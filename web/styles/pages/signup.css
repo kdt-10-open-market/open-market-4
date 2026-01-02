@@ -50,12 +50,11 @@
 .form-tab-content {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 .input-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 }
 .input-title {
   color: var(--color-gray-term);

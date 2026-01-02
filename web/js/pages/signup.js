@@ -7,13 +7,11 @@ let isRegistrationNumberChecked = false;
 const buyerTab = document.getElementById("buyer-tab");
 const sellerTab = document.getElementById("seller-tab");
 const sellerFields = document.getElementById("seller-fields");
-
 buyerTab.addEventListener("click", () => {
   buyerTab.classList.toggle("active-form-tab");
   sellerTab.classList.toggle("active-form-tab");
   sellerFields.classList.toggle("hidden");
 });
-
 sellerTab.addEventListener("click", () => {
   buyerTab.classList.toggle("active-form-tab");
   sellerTab.classList.toggle("active-form-tab");
@@ -26,6 +24,10 @@ const usernameMessage = document.getElementById("username-message");
 const dupChkBtn = document.getElementById("dup-chk-btn");
 usernameInput.addEventListener("input", () => {
   isUsernameChecked = false;
+  Validation.clearMessage(
+    usernameInput,
+    usernameMessage
+  );
 });
 dupChkBtn.addEventListener("click", () => {
   checkUsername();
@@ -33,7 +35,9 @@ dupChkBtn.addEventListener("click", () => {
 
 // 비밀번호 확인
 const passwordInput = document.getElementById("password-input");
+const passwordMessage = document.getElementById("password-message");
 const passwordConfirmInput = document.getElementById("password-confirm-input");
+const passwordConfirmMessage = document.getElementById("password-confirm-message");
 passwordInput.addEventListener("input", () => {
   validatePassword();
 });
@@ -41,11 +45,28 @@ passwordConfirmInput.addEventListener("input", () => {
   validatePassword();
 });
 
+// 핸드폰 번호 확인
+const phoneInputs = ["phone1", "phone2", "phone3"].map(e => document.getElementById(e));
+const phoneMessage = document.getElementById("phone-message");
+phoneInputs.forEach(e => {
+  e.addEventListener("input", () => {
+    Validation.clearMessage(
+      e,
+      phoneMessage
+    );
+  });
+});
+
 // 사업자등록번호 확인
 const registrationNumberInput = document.getElementById("registration-number-input");
+const registrationNumberMessage = document.getElementById("registration-number-message");
 const registrationNumberChkBtn = document.getElementById("registration-number-chk-btn");
 registrationNumberInput.addEventListener("input", () => {
   isRegistrationNumberChecked = false;
+  Validation.clearMessage(
+    registrationNumberInput,
+    registrationNumberMessage
+  );
 });
 registrationNumberChkBtn.addEventListener("click", () => {
   validateRegistrationNumber();
@@ -136,8 +157,6 @@ async function checkUsername() {
 function validatePassword() {
   const password = passwordInput.value;
   const passwordConfirm = passwordConfirmInput.value;
-  const passwordMessage = document.getElementById("password-message");
-  const passwordConfirmMessage = document.getElementById("password-confirm-message");
 
   // 비밀번호 길이 체크
   if (0 < password.length && password.length < 8) {
@@ -200,8 +219,6 @@ function validateName() {
 
 // 전화번호 Validation
 function validatePhone() {
-  const phoneInputs = ["phone1", "phone2", "phone3"].map(e => document.getElementById(e));
-  const phoneMessage = document.getElementById("phone-message");
   const [phone1, phone2, phone3] = phoneInputs.map(input => input.value);
 
   if (!Validation.isValidPhone(phone1, phone2, phone3)) {
@@ -292,8 +309,6 @@ async function handleBuyerSignup(e) {
 
 // 사업자등록번호 검증
 async function validateRegistrationNumber() {
-  const registrationNumberInput = document.getElementById("registration-number-input");
-  const registrationNumberMessage = document.getElementById("registration-number-message");
   const registrationNumber = registrationNumberInput.value.replace(/-/g, "");
 
   if (registrationNumber.length !== 10) {
