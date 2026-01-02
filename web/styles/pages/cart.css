@@ -1,0 +1,102 @@
+.cart-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: min(80%, var(--size-main));
+  margin: 0 auto;
+  text-align: center;
+  padding: 2.5rem 0;
+}
+.cart-page-container > p {
+  font-size: 1.75rem;
+}
+
+.cart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* 공통 버튼 & 체크박스 */
+input[type="checkbox"] {
+  accent-color: #2ecc71;
+  width: 18px;
+  height: 18px;
+}
+
+.cart-grid {
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem 6rem;
+  place-items: center;
+  border-radius: 10px;
+}
+
+/* 헤더 바 */
+.cart-header {
+  padding: 1rem;
+  font-size: 0.875rem;
+  background-color: var(--color-secondary-gray);
+}
+
+/* 하단 요약 */
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.875rem;
+  border-radius: 10px;
+  background-color: var(--color-secondary-gray);
+}
+.summary-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+.summary-result {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.summary-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.amount {
+  font-weight: 700;
+  font-weight: bold;
+}
+.amount span {
+  font-weight: 400;
+}
+.amount-red {
+  font-weight: bold;
+  color: #e74c3c;
+}
+.amount-red span {
+  font-weight: 400;
+}
+.operator {
+  aspect-ratio: 1 / 1;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.operator svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* 하단 주문 버튼 */
+.order-btn-large {
+  background: #2ecc71;
+  color: white;
+  border: none;
+  padding: 15px 80px;
+  font-size: 18px;
+  border-radius: 5px;
+  margin-top: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}

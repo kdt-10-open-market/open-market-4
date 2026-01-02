@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZADU - 오픈 마켓</title>
+  <script defer type="module" src="/js/common/base.js"></script>
+  <script defer type="module" src="/js/common/layout.js"></script>
+  <script defer type="module" src="/js/pages/cart.js"></script>
+  <link rel="stylesheet" href="/styles/pages/cart.css">
+</head>
+
+<body>
+  <div class="cart-page-container">
+    <p>장바구니</p>
+    <div class="cart-container">
+
+      <div class="cart-grid cart-header">
+        <input type="checkbox" id="select-all">
+        <span>상품정보</span>
+        <span>수량</span>
+        <span>상품금액</span>
+      </div>
+
+      <div class="cart-items" id="cart-items"></div>
+
+      <div class="cart-summary">
+        <div class="summary-detail">
+          <div class="summary-box">
+            <p>총 상품금액</p>
+            <p class="amount">46,500<span>원</span></p>
+          </div>
+          <div class="operator">
+            <svg width="34" height="34">
+              <use href="/assets/icons/sprite.svg#icon-order-minus"></use>
+            </svg>
+          </div>
+          <div class="summary-box">
+            <p>상품 할인</p>
+            <p class="amount">0<span>원</span></p>
+          </div>
+          <div class="operator">
+            <svg width="34" height="34">
+              <use href="/assets/icons/sprite.svg#icon-order-plus"></use>
+            </svg>
+          </div>
+          <div class="summary-box">
+            <p>배송비</p>
+            <p class="amount">0<span>원</span></p>
+          </div>
+        </div>
+
+        <div class="summary-result">
+          <div class="summary-box final">
+            <p>결제 예정 금액</p>
+            <p class="amount-red">46,500<span>원</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="order-btn-large">주문하기</button>
+  </div>
+</body>
+
+</html>
