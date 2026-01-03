@@ -13,7 +13,9 @@
 
 <body>
   <div class="cart-page-container">
+
     <p>장바구니</p>
+
     <div class="cart-container">
 
       <div class="cart-grid cart-header">
@@ -23,44 +25,104 @@
         <span>상품금액</span>
       </div>
 
-      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-container-inner" id="cart-container-inner">
+        <div class="cart-items" id="cart-items">
+          <template id="cart-item-template">
+            <div class="cart-grid cart-item">
+              <input type="checkbox">
+              <div class="item-info">
+                <div class="product-img-wrapper">
+                  <img src="/assets/images/product1.png" alt="무릎 담요">
+                </div>
+                <div class="item-info-text">
+                  <div class="main-text">
+                    <p class="main-text-brand">백엔드글로벌</p>
+                    <p class="main-text-name">딥러닝 개발자 무릎 담요</p>
+                    <p class="main-text-price-unit">17,500원</p>
+                  </div>
+                  <div class="secondary-text">
+                    <p class="secondary-text-delivery">택배배송 / 무료배송</p>
+                  </div>
+                </div>
+              </div>
+              <div class="quantity-control">
+                <button class="quantity-control-btn quantity-decrease">
+                  <svg width="34" height="34">
+                    <use href="/assets/icons/sprite.svg#icon-order-minus"></use>
+                  </svg>
+                </button>
+                <p class="quantity-amount">1</p>
+                <button class="quantity-control-btn quantity-increase">
+                  <svg width="34" height="34">
+                    <use href="/assets/icons/sprite.svg#icon-order-plus"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="item-total">
+                <span class="price-red">17,500원</span>
+                <button class="order-btn-small">주문하기</button>
+              </div>
+              <button class="delete-btn">
+                <svg width="34" height="34">
+                  <use href="/assets/icons/sprite.svg#icon-close"></use>
+                </svg>
+              </button>
+            </div>
+          </template>
+        </div>
 
-      <div class="cart-summary">
-        <div class="summary-detail">
-          <div class="summary-box">
-            <p>총 상품금액</p>
-            <p class="amount">46,500<span>원</span></p>
+        <div class="cart-summary">
+          <div class="summary-detail">
+            <div class="summary-box">
+              <p>총 상품금액</p>
+              <div class="amount">
+                <span class="amount-value" id="total-price">-</span>원
+              </div>
+            </div>
+            <div class="operator">
+              <svg width="34" height="34">
+                <use href="/assets/icons/sprite.svg#icon-order-minus"></use>
+              </svg>
+            </div>
+            <div class="summary-box">
+              <p>상품 할인</p>
+              <div class="amount">
+                <span class="amount-value" id="discount-amount">-</span>원
+              </div>
+            </div>
+            <div class="operator">
+              <svg width="34" height="34">
+                <use href="/assets/icons/sprite.svg#icon-order-plus"></use>
+              </svg>
+            </div>
+            <div class="summary-box">
+              <p>배송비</p>
+              <div class="amount">
+                <span class="amount-value" id="delivery-fee">-</span>원
+              </div>
+            </div>
           </div>
-          <div class="operator">
-            <svg width="34" height="34">
-              <use href="/assets/icons/sprite.svg#icon-order-minus"></use>
-            </svg>
-          </div>
-          <div class="summary-box">
-            <p>상품 할인</p>
-            <p class="amount">0<span>원</span></p>
-          </div>
-          <div class="operator">
-            <svg width="34" height="34">
-              <use href="/assets/icons/sprite.svg#icon-order-plus"></use>
-            </svg>
-          </div>
-          <div class="summary-box">
-            <p>배송비</p>
-            <p class="amount">0<span>원</span></p>
+
+          <div class="summary-result">
+            <div class="summary-box final">
+              <p>결제 예정 금액</p>
+              <div class="amount-red">
+                <span class="amount-red-value" id="final-price">-</span>원
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="summary-result">
-          <div class="summary-box final">
-            <p>결제 예정 금액</p>
-            <p class="amount-red">46,500<span>원</span></p>
-          </div>
-        </div>
+        <button class="order-btn-large" id="order-btn-large">주문하기</button>
+
       </div>
-    </div>
 
-    <button class="order-btn-large">주문하기</button>
+      <div id="empty-message" class="empty-message hidden">
+        <p class="empty-main-message">장바구니에 담긴 상품이 없습니다.</p>
+        <p class="empty-sub-message">원하는 상품을 장바구니에 담아보세요!</p>
+      </div>
+
+    </div>
   </div>
 </body>
 
