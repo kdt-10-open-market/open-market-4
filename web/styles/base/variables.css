@@ -12,8 +12,8 @@
   --color-gray-term: #767676;
   --color-btn-disabled: #c4c4c4;
   --color-success: green;
-  --color-error: red;
   --color-seller-name: #767676;
+  --color-important: #e74c3c;
 
   /* Sizes */
   --size-main: 1280px;
