@@ -23,9 +23,9 @@
 
 /* 공통 버튼 & 체크박스 */
 input[type="checkbox"] {
-  accent-color: #2ecc71;
-  width: 18px;
-  height: 18px;
+  accent-color: var(--color-primary);
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .cart-grid {
