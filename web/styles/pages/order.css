@@ -154,13 +154,30 @@ main span {
   display: flex;
   gap: 0.2rem;
 }
-.checkbox-input {
+
+/* .checkbox-input {
+  display: inline-block;
   width: 0.8rem;
   height: 0.8rem;
   border-radius: 50%;
   border: 1px solid #999;
-  appearance: none;
+  background-color: white;
+  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
 }
+
+.checkbox-input::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 4px;
+  width: 4px;
+  height: 9px;
+  border: solid var(--color-primary);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+} */
 
 .main-front1 {
   font-size: 1rem;
@@ -216,12 +233,35 @@ hr {
   gap: 0.2rem;
 }
 
-.last {
+.primary-cbox input {
+  display: none;
+}
+.checkmark {
+  display: inline-block;
   width: 0.8rem;
   height: 0.8rem;
   border: 1px solid #c4c4c4;
   background-color: white;
-  appearance: none;
+  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 4px;
+  width: 4px;
+  height: 9px;
+  border: solid var(--color-primary);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+.primary-cbox input:checked + .checkmark::after {
+  display: block;
+}
+.primary-cbox input:checked + .checkmark {
+  border-color: var(--color-primary);
 }
 
 .btn-last {
@@ -232,9 +272,15 @@ hr {
   font-size: 1.2rem;
   padding: 0.5rem 2rem;
   margin: 0.7rem;
+  cursor: not-allowed;
 }
 
 .red-strong {
   font-size: 1rem;
   color: red;
+}
+
+.btn-last.active {
+  background-color: #2fc24f;
+  cursor: pointer;
 }

@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ZADU - 오픈 마켓</title>
-    <link rel="stylesheet" href="styles/order.css" />
+    <link rel="stylesheet" href="styles/pages/order.css" />
     <link rel="stylesheet" href="styles/base/variables.css" />
+    <script defer type="module" src="js/pages/order.js"></script>
   </head>
   <body>
     <header>
@@ -97,11 +98,32 @@
     <footer>
       <div class="main-front"><strong>결제수단</strong></div>
       <div class="checkbox">
-        <input type="checkbox" class="checkbox-input" /> 신용/체크카드
-        <input type="checkbox" class="checkbox-input" /> 무통장 입금
-        <input type="checkbox" class="checkbox-input" /> 휴대폰 결제
-        <input type="checkbox" class="checkbox-input" /> 네이버페이
-        <input type="checkbox" class="checkbox-input" /> 카카오페이
+        <label
+          ><input type="radio" name="card" id="checkbox-input" />
+          신용/체크카드</label
+        >
+        <label
+          ><input type="radio" name="bank" id="checkbox-input" /> 무통장
+          입금</label
+        >
+        <label
+          ><input type="radio" name="phone" id="checkbox-input" /> 휴대폰
+          결제</label
+        >
+        <label
+          ><input
+            type="radio"
+            name="naver"
+            id="checkbox-input"
+          />네이버페이</label
+        >
+        <label
+          ><input
+            type="radio"
+            name="cacao"
+            id="checkbox-input"
+          />카카오페이</label
+        >
       </div>
       <div class="main-front1"><strong>최종결제 정보</strong></div>
       <div class="footer-box">
@@ -137,10 +159,13 @@
         </div>
         <div class="footer-last-last">
           <div class="footer-last-input">
-            <input type="checkbox" class="last" />주문 내용을 확인하였으며, 정보
-            제공 등에 동의합니다.
+            <label class="primary-cbox" for="agreeCheckbox">
+              <input type="checkbox" id="agreeCheckbox" />
+              <span class="checkmark"></span>
+              주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.
+            </label>
           </div>
-          <button class="btn-last">결제하기</button>
+          <button class="btn-last" id="payButton" disabled>결제하기</button>
         </div>
       </div>
     </footer>
