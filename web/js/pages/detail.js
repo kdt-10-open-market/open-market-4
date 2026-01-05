@@ -12,7 +12,7 @@ function getProductIdFromURL() {
 }
 async function fetchProductDetail(id) {
     try {
-        const response = await fetch(`https://localhost:3000/products/${id}`);
+        const response = await fetch(`https://http://192.168.0.114:8080/detail.html${id}`);
         if (!response.ok) throw new Error('상품 정보를 불러오지 못했습니다.');
         const product = await response.json();
         renderProductDetail(product);
