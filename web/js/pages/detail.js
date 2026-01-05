@@ -38,6 +38,7 @@ function renderProductDetail(product) {
                 </div>
                 <p class="total-price" id="total-price">총 가격: ${product.price + product.shipping_fee}원</p>
                 <button id="buy-now">바로 구매</button>
+                <button id="add-to-cart">장바구니에 추가</button>
             </div>
         </div>
         <div class="detail-info-container">
@@ -72,7 +73,54 @@ function renderProductDetail(product) {
     });
     // 구매 버튼 클릭 시
     const buyNowBtn = document.getElementById('buy-now');
-    buyNowBtn.addEventListener('click', () => {
-        alert(`${product.name} ${quantity}개를 구매합니다.`);
+    buyNowBtn.addEventListener('click', async () => {
+        const confirmBuy = confirm(`${product.name} ${quantity}개를 바로 구매하시겠습니까?`);
+        if (!confirmBuy) return;
+        // 로그인 토큰 가져오기 (예: localStorage)
+        const token = localStorage.getItem('access');
+        try {
+            const res = await fetch('http://192.168.0.114:3000/api/order/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token ? `Bearer ${token}` : undefined
+                },
+                body: JSON.stringify({
+                    order_type: 'direct_order',
+                    product_id: product.id,
+                    quantity
+                })
+            });
+            if (!res.ok) throw new Error('주문 저장 실패');
+        } catch (err) {
+            alert('주문 저장 중 오류 발생: ' + err.message);
+            return;
+        }
+        window.location.href = '/order.html';
     });
+    // 장바구니 버튼 클릭시
+    const addToCartBtn = document.getElementById('add-to-cart');
+    addToCartBtn.addEventListener('click', async () => {
+        // 로그인 토큰 가져오기 (예: localStorage)
+        const token = localStorage.getItem('access');
+        try {
+            const res = await fetch('http://192.168.0.114:3000/api/cart/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token ? `Bearer ${token}` : undefined
+                },
+                body: JSON.stringify({ product_id: product.id, quantity })
+            });
+            if (!res.ok) throw new Error('장바구니 저장 실패');
+        } catch (err) {
+            alert('장바구니 저장 중 오류 발생: ' + err.message);
+            return;
+        }
+        const confirmGoCart = confirm(`${product.name} ${quantity}개를 장바구니에 추가합니다.\n장바구니로 바로 가시겠습니까?`);
+        if (confirmGoCart) {
+            window.location.href = '/cart.html';
+        }
+    });
+    
 }
