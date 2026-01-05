@@ -1,5 +1,8 @@
 const detailContainer = document.getElementById('detail-container');
 const productId = getProductIdFromURL();
+const modalPromise = new Promise((resolve, reject) => {
+import(`/js/common/modal.js`).then(resolve).catch(reject);
+});
 
 // 상품 ID가 유효한지 확인
 if (productId) {
@@ -72,60 +75,108 @@ function renderProductDetail(product) {
         }
     };
 
-    // 구매 및 장바구니 이벤트
-    const buyNowHandler = async () => {
-        const confirmBuy = confirm(`${product.name} ${quantity}개를 바로 구매하시겠습니까?`);
-        if (!confirmBuy) return;
-        const token = localStorage.getItem('access');
-        try {
-            const res = await fetch('http://127.0.0.1:3000/api/order/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token ? `Bearer ${token}` : undefined
-                },
-                body: JSON.stringify({
-                    order_type: 'direct_order',
-                    product_id: product.id,
-                    quantity
-                })
+    // 구매 및 장바구니 이벤트 (모달 활용, 프로미스 패턴)
+    modalPromise.then(({ createModal }) => {
+        const buyNowHandler = () => {
+            createModal({
+                parent: document.body,
+                content: document.createTextNode(`${product.name} ${quantity}개를 바로 구매하시겠습니까?`),
+                cancelBtnTxt: '취소',
+                confirmBtnTxt: '구매'
+            }).then(modal => {
+                if (!modal) return;
+                modal.open(() => {
+                    const token = localStorage.getItem('access');
+                    fetch('http://127.0.0.1:3000/api/order/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': token ? `Bearer ${token}` : undefined
+                        },
+                        body: JSON.stringify({
+                            order_type: 'direct_order',
+                            product_id: product.id,
+                            quantity
+                        })
+                    })
+                    .then(res => {
+                        if (!res.ok) throw new Error('주문 저장 실패');
+                        window.location.href = '/order.html';
+                    })
+                    .catch(err => {
+                        createModal({
+                            parent: document.body,
+                            content: document.createTextNode('주문 저장 중 오류 발생: ' + err.message),
+                            cancelBtnTxt: '닫기',
+                            confirmBtnTxt: '확인'
+                        }).then(errModal => {
+                            if (errModal) errModal.open();
+                        });
+                    });
+                });
             });
-            if (!res.ok) throw new Error('주문 저장 실패');
-        } catch (err) {
-            alert('주문 저장 중 오류 발생: ' + err.message);
-            return;
-        }
-        window.location.href = '/order.html';
-    };
-    const addToCartHandler = async () => {
-        const token = localStorage.getItem('access');
-        try {
-            const res = await fetch('http://127.0.0.1:3000/api/cart/', {
+        };
+        const addToCartHandler = () => {
+            const token = localStorage.getItem('access');
+            fetch('http://127.0.0.1:3000/api/cart/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token ? `Bearer ${token}` : undefined
                 },
                 body: JSON.stringify({ product_id: product.id, quantity })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    if (res.status === 401) {
+                        createModal({
+                            parent: document.body,
+                            content: document.createTextNode('로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?'),
+                            cancelBtnTxt: '취소',
+                            confirmBtnTxt: '로그인'
+                        }).then(loginModal => {
+                            if (loginModal) loginModal.open(() => {
+                                window.location.href = '/signin.html';
+                            });
+                        });
+                        return;
+                    }
+                    throw new Error('장바구니 저장 실패');
+                }
+                createModal({
+                    parent: document.body,
+                    content: document.createTextNode(`${product.name} ${quantity}개를 장바구니에 추가합니다.\n장바구니로 바로 가시겠습니까?`),
+                    cancelBtnTxt: '아니오',
+                    confirmBtnTxt: '예'
+                }).then(goCartModal => {
+                    if (goCartModal) goCartModal.open(() => {
+                        window.location.href = '/cart.html';
+                    });
+                });
+            })
+            .catch(err => {
+                createModal({
+                    parent: document.body,
+                    content: document.createTextNode('장바구니 저장 중 오류 발생: ' + err.message),
+                    cancelBtnTxt: '닫기',
+                    confirmBtnTxt: '확인'
+                }).then(errModal => {
+                    if (errModal) errModal.open();
+                });
             });
-            if (!res.ok) throw new Error('장바구니 저장 실패');
-        } catch (err) {
-            alert('장바구니 저장 중 오류 발생: ' + err.message);
-            return;
-        }
-        const confirmGoCart = confirm(`${product.name} ${quantity}개를 장바구니에 추가합니다.\n장바구니로 바로 가시겠습니까?`);
-        if (confirmGoCart) {
-            window.location.href = '/cart.html';
-        }
-    };
+        };
+        decreaseBtn.addEventListener('click', decreaseHandler);
+        increaseBtn.addEventListener('click', increaseHandler);
+        buyNowBtn.addEventListener('click', buyNowHandler);
+        addToCartBtn.addEventListener('click', addToCartHandler);
+        decreaseBtn._handler = decreaseHandler;
+        increaseBtn._handler = increaseHandler;
+        buyNowBtn._handler = buyNowHandler;
+        addToCartBtn._handler = addToCartHandler;
+    });
     decreaseBtn.addEventListener('click', decreaseHandler);
     increaseBtn.addEventListener('click', increaseHandler);
-    buyNowBtn.addEventListener('click', buyNowHandler);
-    addToCartBtn.addEventListener('click', addToCartHandler);
-
     // 핸들러 참조 저장 (중복 방지)
     decreaseBtn._handler = decreaseHandler;
     increaseBtn._handler = increaseHandler;
-    buyNowBtn._handler = buyNowHandler;
-    addToCartBtn._handler = addToCartHandler;
 }
