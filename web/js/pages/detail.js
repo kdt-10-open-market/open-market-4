@@ -22,35 +22,19 @@ async function fetchProductDetail(id) {
     }
 }
 function renderProductDetail(product) {
-    detailContainer.innerHTML = `
-        <div class="product-detail">
-            <img class="product-image" src="${product.image}" alt="${product.name}">
-            <div class="product-shell">
-                <h2 class="product-name">${product.name}</h2>
-                <p class="seller-name">판매자: ${product.seller?.store_name || product.seller?.name || ''}</p>
-                <p class="price">가격: ${product.price}원</p>
-                <p class="delivery-charge">배송비: ${product.shipping_fee}원</p>
-                <p class="stock">재고: ${product.stock}개</p>
-                <div class="quantity-selector">
-                    <button id="decrease-qty">-</button>
-                    <input type="text" id="quantity" value="1" readonly>
-                    <button id="increase-qty">+</button>
-                </div>
-                <p class="total-price" id="total-price">총 가격: ${product.price + product.shipping_fee}원</p>
-                <button id="buy-now">바로 구매</button>
-                <button id="add-to-cart">장바구니에 추가</button>
-            </div>
-        </div>
-        <div class="detail-info-container">
-            <div class="button-container">버튼</div>
-            <div class="review-container">리뷰</div>
-            <div class="qna-container">Q&A</div>
-            <div class="Return-Exchange-container">반품/교환정보</div>
-        </div>
-        <div class="product-info">
-            <p>${product.info}</p>
-        </div>
-    `;
+    // 각 요소에 직접 값 할당
+    document.getElementById('product-image').src = product.image;
+    document.getElementById('product-image').alt = product.name;
+    document.getElementById('product-name').textContent = product.name;
+    document.getElementById('seller-name').textContent = `판매자: ${product.seller?.store_name || product.seller?.name || ''}`;
+    document.getElementById('price').textContent = `가격: ${product.price}원`;
+    document.getElementById('delivery-charge').textContent = `배송비: ${product.shipping_fee}원`;
+    document.getElementById('stock').textContent = `재고: ${product.stock}개`;
+    document.getElementById('quantity').value = 1;
+    document.getElementById('total-price').textContent = `총 가격: ${product.price + product.shipping_fee}원`;
+    let infoEl = document.querySelector('.product-info p');
+    if (infoEl) infoEl.textContent = product.info;
+    // ...existing code...  
     // 수량 선택 및 총 가격 계산 기능 추가
     const quantityInput = document.getElementById('quantity');
     const decreaseBtn = document.getElementById('decrease-qty');
