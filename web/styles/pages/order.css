@@ -8,7 +8,6 @@ div {
 
 .container {
   width: 100%;
-  padding: 0 16px;
 }
 .header-title {
   display: flex;
@@ -266,11 +265,29 @@ hr {
   background-color: #2fc24f;
   cursor: pointer;
 }
+.moblie {
+  margin: 0;
+}
+
+.moblie2 {
+  margin: 0;
+}
 
 @media (min-width: 768px) {
   .container {
     max-width: 768px;
-    padding: 0 24px;
+  }
+
+  .input-text2 {
+    border: 1px solid #c4c4c4;
+    width: 6rem;
+    height: 1.3rem;
+  }
+
+  .input-text3 {
+    border: 1px solid #c4c4c4;
+    width: 30rem;
+    height: 1.3rem;
   }
 }
 
@@ -278,6 +295,9 @@ hr {
 @media (min-width: 1024px) {
   .container {
     max-width: 1024px;
-    padding: 0 32px;
+  }
+
+  .moblie {
+    display: flex;
   }
 }
