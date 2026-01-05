@@ -1,15 +1,20 @@
 const detailContainer = document.getElementById('detail-container');
 const productId = getProductIdFromURL();
 
+// 상품 ID가 유효한지 확인
 if (productId) {
     fetchProductDetail(productId);
 } else {
     detailContainer.innerHTML = '<p>유효하지 않은 상품 ID입니다.</p>';
 }
+
+// URL에서 상품 ID 추출
 function getProductIdFromURL() {
     const params = new URLSearchParams(window.location.search);
     return params.get('id');
 }
+
+// 상품 상세 정보 가져오기
 async function fetchProductDetail(id) {
     try {
         const response = await fetch(`http://192.168.0.114:3000/api/products/${id}`);
@@ -21,8 +26,9 @@ async function fetchProductDetail(id) {
         detailContainer.innerHTML = `<p>${error.message}</p>`;
     }
 }
+
+// 각 요소에 직접 값 할당
 function renderProductDetail(product) {
-    // 각 요소에 직접 값 할당
     document.getElementById('product-image').src = product.image;
     document.getElementById('product-image').alt = product.name;
     document.getElementById('product-name').textContent = product.name;
@@ -34,33 +40,42 @@ function renderProductDetail(product) {
     document.getElementById('total-price').textContent = `총 가격: ${product.price + product.shipping_fee}원`;
     let infoEl = document.querySelector('.product-info p');
     if (infoEl) infoEl.textContent = product.info;
-    // ...existing code...  
-    // 수량 선택 및 총 가격 계산 기능 추가
+
+    // 기존 이벤트 리스너 제거 후 재등록 (중복 방지)
     const quantityInput = document.getElementById('quantity');
     const decreaseBtn = document.getElementById('decrease-qty');
     const increaseBtn = document.getElementById('increase-qty');
     const totalPriceEl = document.getElementById('total-price');
+    const buyNowBtn = document.getElementById('buy-now');
+    const addToCartBtn = document.getElementById('add-to-cart');
+
+    // removeEventListener를 위해 기존 핸들러를 변수로 선언
+    if (decreaseBtn._handler) decreaseBtn.removeEventListener('click', decreaseBtn._handler);
+    if (increaseBtn._handler) increaseBtn.removeEventListener('click', increaseBtn._handler);
+    if (buyNowBtn._handler) buyNowBtn.removeEventListener('click', buyNowBtn._handler);
+    if (addToCartBtn._handler) addToCartBtn.removeEventListener('click', addToCartBtn._handler);
+
+    // 갯수 이벤트
     let quantity = 1;
-    decreaseBtn.addEventListener('click', () => {
+    const decreaseHandler = () => {
         if (quantity > 1) {
             quantity--;
             quantityInput.value = quantity;
             totalPriceEl.textContent = `총 가격: ${(product.price + product.shipping_fee) * quantity}원`;
         }
-    });
-    increaseBtn.addEventListener('click', () => {
+    };
+    const increaseHandler = () => {
         if (quantity < product.stock) {
             quantity++;
             quantityInput.value = quantity;
             totalPriceEl.textContent = `총 가격: ${(product.price + product.shipping_fee) * quantity}원`;
         }
-    });
-    // 구매 버튼 클릭 시
-    const buyNowBtn = document.getElementById('buy-now');
-    buyNowBtn.addEventListener('click', async () => {
+    };
+
+    // 구매 및 장바구니 이벤트
+    const buyNowHandler = async () => {
         const confirmBuy = confirm(`${product.name} ${quantity}개를 바로 구매하시겠습니까?`);
         if (!confirmBuy) return;
-        // 로그인 토큰 가져오기 (예: localStorage)
         const token = localStorage.getItem('access');
         try {
             const res = await fetch('http://192.168.0.114:3000/api/order/', {
@@ -81,11 +96,8 @@ function renderProductDetail(product) {
             return;
         }
         window.location.href = '/order.html';
-    });
-    // 장바구니 버튼 클릭시
-    const addToCartBtn = document.getElementById('add-to-cart');
-    addToCartBtn.addEventListener('click', async () => {
-        // 로그인 토큰 가져오기 (예: localStorage)
+    };
+    const addToCartHandler = async () => {
         const token = localStorage.getItem('access');
         try {
             const res = await fetch('http://192.168.0.114:3000/api/cart/', {
@@ -105,6 +117,15 @@ function renderProductDetail(product) {
         if (confirmGoCart) {
             window.location.href = '/cart.html';
         }
-    });
-    
+    };
+    decreaseBtn.addEventListener('click', decreaseHandler);
+    increaseBtn.addEventListener('click', increaseHandler);
+    buyNowBtn.addEventListener('click', buyNowHandler);
+    addToCartBtn.addEventListener('click', addToCartHandler);
+
+    // 핸들러 참조 저장 (중복 방지)
+    decreaseBtn._handler = decreaseHandler;
+    increaseBtn._handler = increaseHandler;
+    buyNowBtn._handler = buyNowHandler;
+    addToCartBtn._handler = addToCartHandler;
 }
