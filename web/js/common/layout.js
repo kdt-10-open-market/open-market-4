@@ -1,30 +1,9 @@
-loadHTMLToBody('../../header.html', false);
-loadHTMLToBody('../../footer.html', true);
+import { loadHTMLElem, loadCSS } from "/js/common/dom-utils.js";
 
-loadCSS('../../styles/components/header.css');
-loadCSS('../../styles/components/footer.css');
+const body = document.body;
 
-async function loadHTMLToBody(url, append) {
-  try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('HTML 불러오기 실패');
+loadCSS('/styles/components/header.css');
+loadCSS('/styles/components/footer.css');
 
-    const text = await res.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
-
-    const body = document.body;
-    append ? body.append(...doc.body.children) : body.prepend(...doc.body.children);
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-// async/await 불필요
-// css는 브라우저에서 link 태그를 비동기로 로드함
-function loadCSS(url) {
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = url;
-  document.head.appendChild(link);
-}
+loadHTMLElem(body, '/components/header.html', false);
+loadHTMLElem(body, '/components/footer.html', true);

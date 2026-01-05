@@ -1,0 +1,6 @@
+:not(input).success {
+  color: var(--color-success);
+}
+:not(input).error {
+  color: var(--color-error);
+}
