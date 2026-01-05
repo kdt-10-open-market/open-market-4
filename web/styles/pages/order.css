@@ -5,6 +5,11 @@ body {
 div {
   margin: 0.5rem;
 }
+
+.container {
+  width: 100%;
+  padding: 0 16px;
+}
 .header-title {
   display: flex;
   font-size: 1.5rem;
@@ -90,6 +95,7 @@ img {
 
 .main-back span {
   width: 1rem;
+  text-align: center;
 }
 
 .main-back-title {
@@ -154,30 +160,6 @@ main span {
   display: flex;
   gap: 0.2rem;
 }
-
-/* .checkbox-input {
-  display: inline-block;
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 50%;
-  border: 1px solid #999;
-  background-color: white;
-  position: relative;
-  cursor: pointer;
-  vertical-align: middle;
-}
-
-.checkbox-input::after {
-  content: "";
-  position: absolute;
-  display: none;
-  left: 4px;
-  width: 4px;
-  height: 9px;
-  border: solid var(--color-primary);
-  border-width: 0 3px 3px 0;
-  transform: rotate(45deg);
-} */
 
 .main-front1 {
   font-size: 1rem;
@@ -283,4 +265,19 @@ hr {
 .btn-last.active {
   background-color: #2fc24f;
   cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0 24px;
+  }
+}
+
+/* Desktop (1024px 이상) */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+    padding: 0 32px;
+  }
 }
