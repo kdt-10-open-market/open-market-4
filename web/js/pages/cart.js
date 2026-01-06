@@ -6,19 +6,14 @@ let cartData;
 let sessionCartData;
 // 장바구니 데이터 로드
 (async () => {
-  // 로그인 상태에 따른 데이터 로드
-  if (isLoggedIn()) {
-    cartData = await fetchGetCart();
-  } else {
-    sessionCartData = JSON.parse(sessionStorage.getItem("cartData")) || [];
-    cartData = await Promise.all(
-      sessionCartData.map(async ({ product_id }) => ({
-        ...(await fetchGetProduct(product_id)),
-        includeInTotal: false,
-      }))
-    );
-    renderCartItems();
-  }
+  sessionCartData = JSON.parse(sessionStorage.getItem("cartData")) || [];
+  cartData = await Promise.all(
+    sessionCartData.map(async ({ product_id }) => ({
+      ...(await fetchGetProduct(product_id)),
+      includeInTotal: false,
+    }))
+  );
+  renderCartItems();
 })();
 
 const modalPromise = loadModal();
@@ -257,7 +252,7 @@ function calcPriceSum() {
 // "주문하기" 클릭 시 선택된 상품만 orderData로 전달
 function order() {
   if (hasAnyIncluded()) {
-    sessionStorage.remove("orderData");
+    sessionStorage.removeItem("orderData");
     const selectedItems = sessionCartData.filter(item => item.includeInTotal);
     sessionStorage.setItem("orderData", JSON.stringify(selectedItems));
     window.location.href = "order.html";
