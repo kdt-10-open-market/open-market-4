@@ -5,8 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZADU - Login</title>
+  <script type="module" src="js/common/base.js"></script>
   <link rel="stylesheet" href="styles/pages/signin.css" />
-  <script defer src="js/pages/signin.js"></script>
+  <link rel="stylesheet" href="styles/components/modal.css">
+  <script defer type="module" src="js/pages/signin.js"></script>
 </head>
 
 <body>
@@ -24,7 +26,7 @@
             판매회원 로그인
           </button>
         </div>
-        <form class="login-form">
+        <form class="login-form" novalidate>
           <div class="input-group">
             <input type="text" placeholder="아이디" class="form-input" id="username" required />
           </div>
