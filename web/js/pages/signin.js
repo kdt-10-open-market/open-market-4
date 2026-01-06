@@ -53,7 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // 사용자 타입 확인
       if (data.user.user_type !== userType) {
         alert(
-          `${userType === "BUYER" ? "구매회원" : "판매회원"
+          `${
+            userType === "BUYER" ? "구매회원" : "판매회원"
           } 계정으로 로그인해주세요.`
         );
         return;
@@ -68,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.user.user_type === "BUYER") {
         window.location.href = "index.html";
       } else if (data.user.user_type === "SELLER") {
-        window.location.href = "seller-center.html";
+        window.location.href = "seller-main.html";
       }
     } catch (error) {
       console.error("로그인 오류:", error);

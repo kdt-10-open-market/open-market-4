@@ -7,131 +7,129 @@
     <link rel="stylesheet" href="./styles/base/reset.css" />
     <link rel="stylesheet" href="./styles/base/variables.css" />
     <link rel="stylesheet" href="./styles/pages/seller-center.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
-    />
-    <script defer src="./js/common/layout.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-    <script defer src="./js/seller-center.js"></script>
+    <script type="module" src="./js/common/layout.js"></script>
+    <script type="module" src="./js/pages/seller-center.js"></script>
   </head>
   <body>
-    <!-- Hero Swiper Section -->
-    <div class="swiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <img src="assets/images/product1.png" alt="상품1" />
-        </div>
-        <div class="swiper-slide">
-          <img src="assets/images/product2.png" alt="상품2" />
-        </div>
-        <div class="swiper-slide">
-          <img src="assets/images/product3.png" alt="상품3" />
-        </div>
-        <div class="swiper-slide">
-          <img src="assets/images/product4.png" alt="상품4" />
-        </div>
-        <div class="swiper-slide">
-          <img src="assets/images/product5.png" alt="상품5" />
-        </div>
+    <header>
+      <!-- Mobile Menu Button / 임시로 위치 잡아 놓음 / To-Do : Seller Center에서는 헤더 영역에 햄버거 메뉴 표시되도록 수정 -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <span class="hamburger"></span>
+      </button>
+    </header>
+    <!-- Main Container -->
+    <div class="main-container">
+      <div class="page-header">
+        <h1 class="page-title">
+          대시보드 <span class="store-name">백엔드글로벌</span>
+        </h1>
+        <button
+          type="button"
+          onclick="window.location.href='make-product.html'"
+          class="upload-btn"
+        >
+          <svg width="20" height="20">
+            <use href="assets/icons/sprite.svg#icon-plus"></use>
+          </svg>
+          <span class="upload-text">상품 업로드</span>
+        </button>
       </div>
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+      <div class="content-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+          <nav class="nav-menu">
+            <a href="#" class="nav-item">판매중인 상품</a>
+            <a href="#" class="nav-item"> 주문/배송 </a>
+            <a href="#" class="nav-item"> 문의/리뷰 </a>
+            <a href="#" class="nav-item"> 통계 </a>
+            <a href="#" class="nav-item">스토어 설정</a>
+          </nav>
+        </aside>
+        <!-- Overlay for mobile menu -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <!-- Main Content -->
+        <main class="main-content">
+          <!-- Table Header (Desktop) -->
+          <div class="table-header">
+            <div class="col-product">상품정보</div>
+            <div class="col-price">판매가격</div>
+            <div class="col-edit">수정</div>
+            <div class="col-delete">삭제</div>
+          </div>
+          <!-- Product List -->
+          <div class="product-list">
+            <!-- Product Item 1 -->
+            <div class="product-item">
+              <div class="col-product">
+                <div class="product-info">
+                  <img
+                    src="assets/images/product3.png"
+                    alt="Product"
+                    class="product-image"
+                  />
+                  <div class="product-details">
+                    <p class="product-name">딥러닝 개발자 무릎 담요</p>
+                    <p class="product-stock">재고 : 370개</p>
+                    <!-- Mobile Price -->
+                    <p class="product-price-mobile">17,500원</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-price">17,500원</div>
+              <div class="col-actions">
+                <button class="btn-edit">수정</button>
+                <button class="btn-delete">삭제</button>
+              </div>
+            </div>
+            <!-- Product Item 2 -->
+            <div class="product-item">
+              <div class="col-product">
+                <div class="product-info">
+                  <img
+                    src="assets/images/product3.png"
+                    alt="Product"
+                    class="product-image"
+                  />
+                  <div class="product-details">
+                    <p class="product-name">딥러닝 개발자 무릎 담요</p>
+                    <p class="product-stock">재고 : 370개</p>
+                    <!-- Mobile Price -->
+                    <p class="product-price-mobile">17,500원</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-price">17,500원</div>
+              <div class="col-actions">
+                <button class="btn-edit">수정</button>
+                <button class="btn-delete">삭제</button>
+              </div>
+            </div>
+            <!-- Product Item 3 -->
+            <div class="product-item">
+              <div class="col-product">
+                <div class="product-info">
+                  <img
+                    src="assets/images/product3.png"
+                    alt="Product"
+                    class="product-image"
+                  />
+                  <div class="product-details">
+                    <p class="product-name">딥러닝 개발자 무릎 담요</p>
+                    <p class="product-stock">재고 : 370개</p>
+                    <!-- Mobile Price -->
+                    <p class="product-price-mobile">17,500원</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-price">17,500원</div>
+              <div class="col-actions">
+                <button class="btn-edit">수정</button>
+                <button class="btn-delete">삭제</button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
-    <!-- Products Section -->
-    <section class="products-section">
-      <div class="products-container">
-        <div class="products-grid">
-          <!-- Product 1 -->
-          <div class="product-card">
-            <div class="product-image">
-              <img
-                src="assets/images/product1.png"
-                alt="Hack Your Life 개발자 노트북 파우치"
-              />
-            </div>
-            <div class="product-info">
-              <span class="seller-name">우당탕탕 라이캣의 실험실</span>
-              <h3 class="product-title">Hack Your Life 개발자 노트북 파우치</h3>
-              <div class="product-price">
-                <span class="price">29,000</span>
-                <span class="currency">원</span>
-              </div>
-            </div>
-          </div>
-          <!-- Product 2 -->
-          <div class="product-card">
-            <div class="product-image">
-              <img
-                src="assets/images/product2.png"
-                alt="내 개발잡니다 개발자키링 금속키링"
-              />
-            </div>
-            <div class="product-info">
-              <span class="seller-name">제주코딩베이스캠프</span>
-              <h3 class="product-title">내 개발잡니다 개발자키링 금속키링</h3>
-              <div class="product-price">
-                <span class="price">29,000</span>
-                <span class="currency">원</span>
-              </div>
-            </div>
-          </div>
-          <!-- Product 3 -->
-          <div class="product-card">
-            <div class="product-image">
-              <img
-                src="assets/images/product3.png"
-                alt="딥러닝 개발자 무릎 담요"
-              />
-            </div>
-            <div class="product-info">
-              <span class="seller-name">백엔드글로벌</span>
-              <h3 class="product-title">딥러닝 개발자 무릎 담요</h3>
-              <div class="product-price">
-                <span class="price">29,000</span>
-                <span class="currency">원</span>
-              </div>
-            </div>
-          </div>
-          <!-- Product 4 -->
-          <div class="product-card">
-            <div class="product-image">
-              <img
-                src="assets/images/product4.png"
-                alt="우당탕탕 라이캣의 실험실 스티커 팩"
-              />
-            </div>
-            <div class="product-info">
-              <span class="seller-name">코딩앤유</span>
-              <h3 class="product-title">우당탕탕 라이캣의 실험실 스티커 팩</h3>
-              <div class="product-price">
-                <span class="price">29,000</span>
-                <span class="currency">원</span>
-              </div>
-            </div>
-          </div>
-          <!-- Product 5 -->
-          <div class="product-card">
-            <div class="product-image">
-              <img
-                src="assets/images/product5.png"
-                alt="버그를 Java라 버그잡는 개리씨 키링 개발자키링"
-              />
-            </div>
-            <div class="product-info">
-              <span class="seller-name">파이썬스쿨</span>
-              <h3 class="product-title">
-                버그를 Java라 버그잡는 개리씨 키링 개발자키링
-              </h3>
-              <div class="product-price">
-                <span class="price">29,000</span>
-                <span class="currency">원</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </body>
 </html>
