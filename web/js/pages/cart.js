@@ -258,16 +258,12 @@ function calcPriceSum() {
 
 setTimeout(() => {
   const selectedItems = sessionCartData.filter(item => item.includeInTotal);
-  console.log(selectedItems)
-  console.log(JSON.stringify(selectedItems))
   sessionStorage.setItem("orderData", JSON.stringify(selectedItems));
 }, 1000);
 // "주문하기" 클릭 시 선택된 상품만 orderData로 전달
 function order() {
   sessionStorage.remove("orderData");
   const selectedItems = sessionCartData.filter(item => item.includeInTotal);
-  console.log(selectedItems)
-  console.log(JSON.stringify(selectedItems))
   sessionStorage.setItem("orderData", JSON.stringify(selectedItems));
   window.location.href = "order.html";
 }
