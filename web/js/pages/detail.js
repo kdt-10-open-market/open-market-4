@@ -75,8 +75,6 @@ function renderProductDetail(product) {
     };
 
     // 구매 및 장바구니 이벤트 (모달 활용, 프로미스 패턴)
-
-
     decreaseBtn.addEventListener('click', decreaseHandler);
     increaseBtn.addEventListener('click', increaseHandler);
     // 핸들러 참조 저장 (중복 방지)
