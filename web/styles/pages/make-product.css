@@ -47,6 +47,10 @@ body {
   list-style: none;
 }
 
+ul.guidelines-list {
+  padding-inline-start: 0;
+}
+
 .guidelines-list li {
   font-size: 10px;
   color: #666;

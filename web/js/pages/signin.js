@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 탭 전환 (구매회원/판매회원)
   const buyerTab = document.getElementById("commonTab");
   const sellerTab = document.getElementById("venderTab");
-  let userType = "BUYER"; // 기본값: 구매회원
+  let userType = "BUYER";
 
   buyerTab.classList.add("active");
 
@@ -18,14 +18,73 @@ document.addEventListener("DOMContentLoaded", () => {
     userType = "SELLER";
   });
 
-  // 로그인 처리
+  // 실시간으로 공백 입력 방지
+
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+
+  usernameInput.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(/\s/g, "");
+  });
+
+  passwordInput.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(/\s/g, "");
+  });
+
+  // ============ 비로그인 장바구니 → 서버 동기화 ============
+  async function syncGuestCartToServer(accessToken) {
+    const guestCartData = JSON.parse(sessionStorage.getItem("cartData")) || [];
+
+    if (guestCartData.length === 0) {
+      return; // 동기화할 데이터 없음
+    }
+
+    const baseURL = "http://localhost:3000/api";
+    const syncResults = [];
+
+    for (const item of guestCartData) {
+      try {
+        const response = await fetch(`${baseURL}/cart/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            product_id: item.product_id,
+            quantity: item.quantity,
+          }),
+        });
+
+        if (response.ok) {
+          syncResults.push({ product_id: item.product_id, success: true });
+        } else {
+          console.error(
+            `상품 ${item.product_id} 동기화 실패:`,
+            await response.json()
+          );
+          syncResults.push({ product_id: item.product_id, success: false });
+        }
+      } catch (error) {
+        console.error(`상품 ${item.product_id} 동기화 오류:`, error);
+        syncResults.push({ product_id: item.product_id, success: false });
+      }
+    }
+
+    // 동기화 완료 후 sessionStorage 클리어
+    sessionStorage.removeItem("cartData");
+
+    console.log("장바구니 동기화 결과:", syncResults);
+    return syncResults;
+  }
+
+  // ============ 로그인 처리 ============
   async function handleSignin(e) {
     e.preventDefault();
 
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    // 기본 Validation
     if (!username || !password) {
       alert("아이디와 비밀번호를 입력해주세요.");
       return;
@@ -37,10 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username,
-            password,
-          }),
+          body: JSON.stringify({ username, password }),
         }
       );
 
@@ -50,10 +106,10 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(data.detail || "로그인에 실패했습니다.");
       }
 
-      // 사용자 타입 확인
       if (data.user.user_type !== userType) {
         alert(
-          `${userType === "BUYER" ? "구매회원" : "판매회원"
+          `${
+            userType === "BUYER" ? "구매회원" : "판매회원"
           } 계정으로 로그인해주세요.`
         );
         return;
@@ -64,14 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("refresh_token", data.refresh);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // 로그인 후 직전 페이지로 이동
-      const redirectAfterLogin = sessionStorage.getItem("redirectAfterLogin");
-      if (redirectAfterLogin) {
-        window.location.href = redirectAfterLogin;
-        sessionStorage.removeItem('redirectAfterLogin');
-      }
-      else {
+      // ✅ 비로그인 장바구니 데이터를 서버에 동기화
+      await syncGuestCartToServer(data.access);
+
+      // 사용자 타입에 따라 페이지 이동
+      if (data.user.user_type === "BUYER") {
         window.location.href = "index.html";
+      } else if (data.user.user_type === "SELLER") {
+        window.location.href = "seller-main.html";
       }
     } catch (error) {
       console.error("로그인 오류:", error);
@@ -79,7 +135,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 폼 제출 이벤트
   const signinForm = document.querySelector(".login-form");
   signinForm.addEventListener("submit", handleSignin);
 });
