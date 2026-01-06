@@ -99,3 +99,6 @@
   cursor: pointer;
   color: #666;
 }
+.hidden {
+  display: none;
+}

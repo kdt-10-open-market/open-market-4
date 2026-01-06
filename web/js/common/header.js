@@ -1,7 +1,18 @@
-import { isLoggedIn } from "/js/common/auth.js";
+import { isLoggedIn, logout } from "/js/common/auth.js";
+import { createModal } from "/js/common/modal.js";
 
 export function initHeader() {
-    console.log("Header script loaded successfully.");
+    const parent = document.body;
+    const content = document.createElement("p");
+    content.textContent = "로그아웃 하시겠습니까?";
+    const cancelBtnTxt = "취소";
+    const confirmBtnTxt = "확인";
+    const modalObj = createModal({
+        parent,
+        content,
+        cancelBtnTxt,
+        confirmBtnTxt
+    });
 
     // 로고 클릭 이벤트
     const mainLogo = document.getElementById('main-logo');
@@ -58,7 +69,11 @@ export function initHeader() {
     if (userIcon) {
         userIcon.addEventListener('click', () => {
             if (isLoggedIn()) {
-                window.location.href = '/mypage.html';
+                (async () => {
+                    (await modalObj).open(() => {
+                        logout();
+                    })
+                })();
             } else {
                 window.location.href = '/signin.html';
             }

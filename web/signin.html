@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZADU - Login</title>
   <script type="module" src="js/common/base.js"></script>
   <link rel="stylesheet" href="styles/pages/signin.css" />
-  <link rel="stylesheet" href="styles/components/modal.css">
   <script defer type="module" src="js/pages/signin.js"></script>
 </head>
+
 <body>
   <div class="container">
     <div class="login-wrapper">
@@ -25,31 +26,13 @@
           </button>
         </div>
         <form class="login-form" novalidate>
-          <div class="input-group">
-            <input type="text" placeholder="아이디" class="form-input" id="username" required />
-          </div>
-          <div class="input-group">
-            <input type="password" placeholder="비밀번호" class="form-input" id="password" required />
-          </div>
           <form class="login-form" novalidate>
             <div class="input-group">
-              <input
-                type="text"
-                placeholder="아이디"
-                class="form-input"
-                id="username"
-                required
-              />
+              <input type="text" placeholder="아이디" class="form-input" id="username" required />
             </div>
             <div id="username-message" class="hidden"></div>
             <div class="input-group">
-              <input
-                type="password"
-                placeholder="비밀번호"
-                class="form-input"
-                id="password"
-                required
-              />
+              <input type="password" placeholder="비밀번호" class="form-input" id="password" required />
             </div>
             <div id="password-message" class="hidden"></div>
             <button type="submit" class="login-button">로그인</button>
@@ -59,8 +42,9 @@
               <a href="#" class="link">비밀번호 찾기</a>
             </div>
           </form>
-        </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
