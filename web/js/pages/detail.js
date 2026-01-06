@@ -7,29 +7,29 @@ import { createModal } from "/js/common/modal.js";
 
 // 상품 ID가 유효하면 상세 정보 요청, 아니면 에러 메시지
 if (productId) {
-    fetchProductDetail(productId);
+  fetchProductDetail(productId);
 } else {
-    detailContainer.innerHTML = '<p>유효하지 않은 상품 ID입니다.</p>';
+  detailContainer.innerHTML = '<p>유효하지 않은 상품 ID입니다.</p>';
 }
 // URL에서 상품 ID 추출 함수
 function getProductIdFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('id');
+  const params = new URLSearchParams(window.location.search);
+  return params.get('id');
 }
 // 상품 상세 정보 fetch 및 렌더링
 async function fetchProductDetail(id) {
-    try {
-        const response = await fetch(`http://127.0.0.1:3000/api/products/${id}`);
-        if (!response.ok) throw new Error('상품 정보를 불러오지 못했습니다.');
-        const product = await response.json();
-        renderProductDetail(product);
-    } catch (error) {
-        console.error(error);
-        detailContainer.innerHTML = `<p>${error.message}</p>`;
-    }
+  try {
+    const response = await fetch(`http://127.0.0.1:3000/api/products/${id}`);
+    if (!response.ok) throw new Error('상품 정보를 불러오지 못했습니다.');
+    const product = await response.json();
+    renderProductDetail(product);
+  } catch (error) {
+    console.error(error);
+    detailContainer.innerHTML = `<p>${error.message}</p>`;
+  }
 }
 // 수량 증감 및 총 가격 갱신 함수 (배송비는 한 번만 더함)
-window.controlQuantity = function(type) {
+window.controlQuantity = function (type) {
   const quantityInput = document.getElementById('quantity');
   const totalPriceEl = document.getElementById('total-price');
   const price = parseInt(document.getElementById('price').textContent.replace(/[^0-9]/g, ''), 10);
@@ -60,17 +60,17 @@ function setProductDetailElements(product) {
   if (infoEl) infoEl.textContent = product.info;
 }
 // 장바구니 추가 - 세션스토리지 cartdata에 id, 수량 저장
-window.addToCart = function() {
+window.addToCart = function () {
   const productId = getProductIdFromURL();
   const quantity = parseInt(document.getElementById('quantity').value, 10);
-// 장바구니 데이터 세션스토리지에서 불러오기
+  // 장바구니 데이터 세션스토리지에서 불러오기
   let cart = [];
   try {
-    cart = JSON.parse(sessionStorage.getItem('cartdata')) || [];
+    cart = JSON.parse(sessionStorage.getItem('cartData')) || [];
   } catch (e) {
     cart = [];
   }
-// 이미 장바구니에 있는지 확인
+  // 이미 장바구니에 있는지 확인
   const existing = cart.find(item => item.product_id == productId);
   if (existing) {
     createModal({
@@ -105,10 +105,10 @@ window.addToCart = function() {
   });
 }
 // 바로구매(주문) - 세션스토리지 orderdata에 id, 수량만 저장
-window.buyNow = function() {
+window.buyNow = function () {
   const productId = getProductIdFromURL();
   const quantity = parseInt(document.getElementById('quantity').value, 10);
-// 주문 데이터 세션스토리지에 저장
+  // 주문 데이터 세션스토리지에 저장
   const order = {
     product_id: productId,
     quantity
