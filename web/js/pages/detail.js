@@ -91,7 +91,7 @@ window.addToCart = function() {
     quantity
   };
   cart.push(cartItem);
-  sessionStorage.setItem('cartdata', JSON.stringify(cart));
+  sessionStorage.setItem('cartData', JSON.stringify(cart));
   // 장바구니 이동 확인 모달
   createModal({
     parent: document.body,
@@ -113,7 +113,7 @@ window.buyNow = function() {
     product_id: productId,
     quantity
   };
-  sessionStorage.setItem('orderdata', JSON.stringify(order));
+  sessionStorage.setItem('orderData', JSON.stringify(order));
   // 구매 확인 모달
   createModal({
     parent: document.body,
