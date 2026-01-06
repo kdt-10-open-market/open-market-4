@@ -53,8 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // 사용자 타입 확인
       if (data.user.user_type !== userType) {
         alert(
-          `${
-            userType === "BUYER" ? "구매회원" : "판매회원"
+          `${userType === "BUYER" ? "구매회원" : "판매회원"
           } 계정으로 로그인해주세요.`
         );
         return;
@@ -65,11 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("refresh_token", data.refresh);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // 사용자 타입에 따라 페이지 이동
-      if (data.user.user_type === "BUYER") {
+      // 로그인 후 직전 페이지로 이동
+      const redirectAfterLogin = sessionStorage.getItem("redirectAfterLogin");
+      if (redirectAfterLogin) {
+        window.location.href = redirectAfterLogin;
+        sessionStorage.removeItem('redirectAfterLogin');
+      }
+      else {
         window.location.href = "index.html";
-      } else if (data.user.user_type === "SELLER") {
-        window.location.href = "seller-main.html";
       }
     } catch (error) {
       console.error("로그인 오류:", error);

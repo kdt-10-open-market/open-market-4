@@ -30,6 +30,8 @@ export async function checkLogin(modalParent) {
       cancelBtnTxt: "아니오",
       confirmBtnTxt: "예"
     });
+    // 직전 페이지로 돌아가기 위한 세션 엔트리
+    sessionStorage.setItem('redirectAfterLogin', window.location.href);
     loginModal.open(() => {
       window.location.href = "signin.html";
     });
