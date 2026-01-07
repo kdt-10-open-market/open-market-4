@@ -5,7 +5,7 @@ const detailContainer = document.getElementById('detail-container');
 // URL에서 상품 id 추출
 const productId = getProductIdFromURL();
 // 인증 유틸 import
-import { isLoggedIn, checkLogin } from "js/common/auth.js";
+import { isLoggedIn, checkLogin } from "./js/common/auth.js";
 // 모달 함수 import
 import { createModal } from "js/common/modal.js";
 
