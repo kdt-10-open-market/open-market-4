@@ -1,4 +1,5 @@
 import { createModal } from "./modal.js";
+import { API_BASE_URL } from "./config.js";
 
 export function isLoggedIn() {
   return !!localStorage.getItem("access_token");
@@ -58,7 +59,7 @@ export function logout() {
  * });
  */
 export async function fetchWithAuth(endpoint, options = {}) {
-  const baseURL = "http://localhost:3000/api"
+  const baseURL = API_BASE_URL;
   const targetURL = `${baseURL}/${endpoint}`;
   const accessToken = localStorage.getItem("access_token");
 
