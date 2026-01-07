@@ -82,13 +82,8 @@
 
 /* 판매자 모드 스타일 */
 
-/* 판매자: 장바구니 숨김 */
-[data-mode="seller"] .cart-icon {
-  display: none;
-}
-
 /* 판매자: 판매자 센터 버튼 표시 */
-[data-mode="seller"] .seller-center-button {
+.seller-center-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,17 +100,17 @@
   white-space: nowrap;
 }
 
-[data-mode="seller"] .seller-center-button:hover {
+.seller-center-button:hover {
   background-color: #1aa33d;
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(33, 191, 72, 0.3);
 }
 
-[data-mode="seller"] .seller-center-button:active {
+.seller-center-button:active {
   transform: translateY(0);
 }
 
-[data-mode="seller"] .seller-center-button span {
+.seller-center-button span {
   display: none;
 }
 
@@ -136,7 +131,7 @@
     height: 23px;
   }
 
-  [data-mode="seller"] .seller-center-button span {
+  .seller-center-button span {
     display: inline;
   }
 }
@@ -304,4 +299,8 @@ Need to FIX
 
 .header-nav-link:hover {
   color: #21bf48;
+}
+
+.hidden {
+  display: none;
 }
