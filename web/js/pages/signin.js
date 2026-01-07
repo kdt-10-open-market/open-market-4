@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       localStorage.setItem("user", JSON.stringify(data.user));
 
       // ✅ 비로그인 장바구니 데이터를 서버에 동기화
-      await syncGuestCartToServer(data.access);
+      // await syncGuestCartToServer(data.access);
 
       // 사용자 타입에 따라 페이지 이동
 
