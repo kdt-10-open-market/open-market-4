@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원가입</title>
-  <script defer type="module" src="/js/common/base.js"></script>
+  <script type="module" src="/js/common/base.js"></script>
   <link rel="stylesheet" href="/styles/pages/signup.css">
   <link rel="stylesheet" href="/styles/components/form.css">
   <link rel="stylesheet" href="/styles/components/checkbox.css">
-  <script defer type="module" src="/js/pages/signup.js"></script>
+  <script type="module" src="/js/pages/signup.js"></script>
 </head>
 
 <body>
@@ -24,11 +24,11 @@
         <!-- 탭 메뉴 -->
         <div class="form-tab-menu-btns" role="tablist" aria-label="가입 회원 분류 탭">
           <button id="buyer-tab" class="form-tab-button active" data-tab="buyer" role="tab" aria-selected="true"
-            aria-controls="buyer-content" tabindex="-1">
+            aria-controls="buyer-fields" tabindex="-1">
             구매회원가입
           </button>
           <button id="seller-tab" class="form-tab-button" data-tab="seller" role="tab" aria-selected="false"
-            aria-controls="seller-content" tabindex="0">
+            aria-controls="seller-fields" tabindex="0">
             판매회원가입
           </button>
         </div>
@@ -38,7 +38,7 @@
           <div class="form-tab-content-wrapper">
 
             <!-- 구매회원가입 탭 -->
-            <div id="buyer-fields" class="form-tab-content active" id="buyer-content" role="tabpanel" tabindex="0">
+            <div id="buyer-fields" class="form-tab-content active" role="tabpanel" tabindex="0">
               <div class="input-wrapper">
                 <div class="input-title">아이디</div>
                 <div class="input-group">
@@ -91,7 +91,7 @@
               </div>
 
               <!-- 판매회원가입 탭 -->
-              <div id="seller-fields" class="form-tab-content" id="seller-content" role="tabpanel" tabindex="0">
+              <div id="seller-fields" class="form-tab-content" role="tabpanel" tabindex="0">
                 <div class="input-wrapper">
                   <div class="input-title">사업자 등록번호</div>
                   <div class="input-group">
