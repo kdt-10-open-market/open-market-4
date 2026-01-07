@@ -49,9 +49,6 @@ export async function initHeader() {
         performSearch();
       }
     });
-
-    //  searchIcon.addEventListener("click", performSearch);
-    //  searchIcon.style.cursor = "pointer";
   }
 
   // 장바구니 아이콘 클릭 이벤트
@@ -77,7 +74,7 @@ export async function initHeader() {
     });
   }
 
-  // 판매자 센터 버튼 보이기/숨기기
+  // 판매자 회원 헤더 스타일 토글
   const userData = localStorage.getItem("user");
   const sellerCenterButton = document.getElementById('seller-center-button');
   if (userData) {
@@ -85,13 +82,16 @@ export async function initHeader() {
       const user = JSON.parse(userData);
       if (user.user_type === "SELLER") {
         sellerCenterButton.classList.remove('hidden');
+        cartIcon.classList.add('hidden');
       } else {
         sellerCenterButton.classList.add('hidden');
+        cartIcon.classList.remove('hidden');
       }
     } catch (error) {
       console.error("user 데이터 파싱 오류:", error);
     }
   } else {
     sellerCenterButton.classList.add('hidden');
+    cartIcon.classList.remove('hidden');
   }
 }
