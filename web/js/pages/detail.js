@@ -2,6 +2,8 @@
 const detailContainer = document.getElementById('detail-container');
 // URL에서 상품 id 추출
 const productId = getProductIdFromURL();
+// 인증 유틸 import
+import { isLoggedIn, checkLogin } from "/js/common/auth.js";
 // 모달 함수 import
 import { createModal } from "/js/common/modal.js";
 
@@ -42,7 +44,7 @@ window.controlQuantity = function (type) {
     quantity++;
   }
   quantityInput.value = quantity;
-  totalPriceEl.textContent = `총 가격: ${(price * quantity + delivery)}원`;
+  totalPriceEl.textContent = `총 가격: ${(price * quantity + delivery).toLocaleString()}원`;
 }
 // 상품 정보 각 요소에 할당
 function setProductDetailElements(product) {
@@ -51,11 +53,11 @@ function setProductDetailElements(product) {
   document.getElementById('product-image').alt = product.name;
   document.getElementById('product-name').textContent = product.name;
   document.getElementById('seller-name').textContent = `${product.seller?.store_name || product.seller?.name || ''}`;
-  document.getElementById('price').textContent = `가격: ${product.price}원`;
-  document.getElementById('delivery-charge').textContent = `배송비: ${product.shipping_fee}원`;
-  document.getElementById('stock').textContent = `재고: ${product.stock}개`;
+  document.getElementById('price').textContent = `가격: ${product.price.toLocaleString()}원`;
+  document.getElementById('delivery-charge').textContent = `배송비: ${product.shipping_fee.toLocaleString()}원`;
+  document.getElementById('stock').textContent = `재고: ${product.stock.toLocaleString()}개`;
   document.getElementById('quantity').value = 1;
-  document.getElementById('total-price').textContent = `총 가격: ${product.price + product.shipping_fee}원`;
+  document.getElementById('total-price').textContent = `총 가격: ${(product.price + product.shipping_fee).toLocaleString()}원`;
   let infoEl = document.querySelector('.product-info p');
   if (infoEl) infoEl.textContent = product.info;
 }
@@ -106,6 +108,11 @@ window.addToCart = function () {
 }
 // 바로구매(주문) - 세션스토리지 orderdata에 id, 수량만 저장
 window.buyNow = function () {
+  if (!isLoggedIn()) {
+    checkLogin(document.body);
+    return;
+  }
+
   const productId = getProductIdFromURL();
   const quantity = parseInt(document.getElementById('quantity').value, 10);
   // 주문 데이터 세션스토리지에 저장

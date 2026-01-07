@@ -124,11 +124,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       await syncGuestCartToServer(data.access);
 
       // 사용자 타입에 따라 페이지 이동
-      if (data.user.user_type === "BUYER") {
-        window.location.href = "index.html";
-      } else if (data.user.user_type === "SELLER") {
-        window.location.href = "seller-main.html";
-      }
+
+      const dest = sessionStorage.getItem('redirectAfterLogin');
+      window.location.href = dest;
     } catch (error) {
       console.error("로그인 오류:", error);
       showSimpleModal(error.message || "아이디 또는 비밀번호를 확인해주세요.");
