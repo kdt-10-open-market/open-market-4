@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../common/config.js";
 import { createModal } from "../common/modal.js";
 
 const modalObj = createModal();
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return; // 동기화할 데이터 없음
     }
 
-    const baseURL = "http://localhost:3000/api";
+    const baseURL = API_BASE_URL;
     const syncResults = [];
 
     for (const item of guestCartData) {
@@ -96,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/accounts/signin",
+        `${API_BASE_URL}/accounts/signin`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
