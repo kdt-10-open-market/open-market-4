@@ -76,4 +76,22 @@ export async function initHeader() {
       }
     });
   }
+
+  // 판매자 센터 버튼 보이기/숨기기
+  const userData = localStorage.getItem("user");
+  const sellerCenterButton = document.getElementById('seller-center-button');
+  if (userData) {
+    try {
+      const user = JSON.parse(userData);
+      if (user.user_type === "SELLER") {
+        sellerCenterButton.classList.remove('hidden');
+      } else {
+        sellerCenterButton.classList.add('hidden');
+      }
+    } catch (error) {
+      console.error("user 데이터 파싱 오류:", error);
+    }
+  } else {
+    sellerCenterButton.classList.add('hidden');
+  }
 }

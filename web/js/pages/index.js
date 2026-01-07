@@ -4,6 +4,7 @@ let productData = [];
 
 loadProducts();
 
+
 async function loadProducts() {
   productData = await fetchProducts();
   renderProductCards();
