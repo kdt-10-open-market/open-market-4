@@ -1,5 +1,6 @@
-import { createModal } from "js/common/modal.js";
-import { isLoggedIn, checkLogin, fetchWithAuth } from "js/common/auth.js";
+import { createModal } from "../common/modal.js";
+import { isLoggedIn, checkLogin, fetchWithAuth } from "../common/auth.js";
+import { API_BASE_URL } from "../common/config.js";
 
 // 장바구니 데이터 로드
 let cartData;
@@ -296,7 +297,7 @@ function bindModalModifyEvent(modal) {
 }
 
 async function fetchGetProduct(id) {
-  const url = `http://localhost:3000/api/products/${id}`;
+  const url = `${API_BASE_URL}/products/${id}`;
   const response = await fetch(url);
   const data = await response.json();
   return data;
@@ -313,7 +314,7 @@ async function fetchGetCart() {
 }
 
 async function fetchDeleteCart(cartItemId) {
-  const endpoint = `/cart/${cartItemId}/`;
+  const endpoint = `cart/${cartItemId}/`;
 
   const response = await fetchWithAuth(endpoint, {
     method: "DELETE",

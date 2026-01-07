@@ -1,11 +1,11 @@
+import { API_BASE_URL } from "../common/config.js";
+import { createModal } from "../common/modal.js";
+import { isLoggedIn, checkLogin } from "../common/auth.js";
+
 // 상품 상세 컨테이너 DOM
 const detailContainer = document.getElementById('detail-container');
 // URL에서 상품 id 추출
 const productId = getProductIdFromURL();
-// 인증 유틸 import
-import { isLoggedIn, checkLogin } from "js/common/auth.js";
-// 모달 함수 import
-import { createModal } from "js/common/modal.js";
 
 // 상품 ID가 유효하면 상세 정보 요청, 아니면 에러 메시지
 if (productId) {
@@ -21,7 +21,7 @@ function getProductIdFromURL() {
 // 상품 상세 정보 fetch 및 렌더링
 async function fetchProductDetail(id) {
   try {
-    const response = await fetch(`http://127.0.0.1:3000/api/products/${id}`);
+    const response = await fetch(`${API_BASE_URL}/products/${id}`);
     if (!response.ok) throw new Error('상품 정보를 불러오지 못했습니다.');
     const product = await response.json();
     renderProductDetail(product);

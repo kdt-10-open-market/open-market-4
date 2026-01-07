@@ -1,6 +1,7 @@
-import Validation from "js/common/validation.js";
-import { setTabGroup } from "js/common/tab-ui.js";
-import { createModal } from "js/common/modal.js";
+import { API_BASE_URL } from "../common/config.js";
+import Validation from "../common/validation.js";
+import { setTabGroup } from "../common/tab-ui.js";
+import { createModal } from "../common/modal.js";
 
 const modalObj = await createModal();
 let isUsernameChecked = false;
@@ -166,7 +167,7 @@ async function checkUsername() {
 
   try {
     const response = await fetch(
-      "http://localhost:3000/api/accounts/validate-username",
+      `${API_BASE_URL}/accounts/validate-username`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -379,7 +380,7 @@ async function handleBuyerSignup(e) {
 
   try {
     const response = await fetch(
-      "http://localhost:3000/api/accounts/buyer/signup",
+      `${API_BASE_URL}/accounts/buyer/signup`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -427,7 +428,7 @@ async function validateRegistrationNumber() {
 
   try {
     const response = await fetch(
-      "http://localhost:3000/api/accounts/seller/validate-registration-number",
+      `${API_BASE_URL}/accounts/seller/validate-registration-number`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -514,7 +515,7 @@ async function handleSellerSignup(e) {
 
   try {
     const response = await fetch(
-      "http://localhost:3000/api/accounts/seller/signup",
+      `${API_BASE_URL}/accounts/seller/signup`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
