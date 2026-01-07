@@ -1,10 +1,4 @@
-import { createModal } from "/js/common/modal.js";
-
-// 로그아웃 기능 바인딩
-const logoutButton = document.getElementById("logout-button");
-if (logoutButton) {
-  logoutButton.addEventListener("click", handleLogout);
-}
+import { createModal } from "js/common/modal.js";
 
 export function isLoggedIn() {
   return !!localStorage.getItem("access_token");
@@ -40,17 +34,13 @@ export async function checkLogin(modalParent) {
   return true;
 }
 
-function handleLogout() {
+export function logout() {
   // LocalStorage에서 모든 인증 정보 삭제
   localStorage.removeItem("access_token");
   localStorage.removeItem("refresh_token");
   localStorage.removeItem("user");
 
-  // SessionStorage 정리 (장바구니, 주문 데이터 등)
-  sessionStorage.clear();
-
-  // 로그인 페이지로 이동
-  window.location.href = "/signin.html";
+  window.location.href = "index.html";
 }
 
 /**
