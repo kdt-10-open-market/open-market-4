@@ -1,6 +1,8 @@
 # Open Market 프로젝트 발표 자료
 
 <div align="center">
+  <h1>고양이가 짜준 코드 팀 프로젝트</h1>
+  <img src="./web/assets/images/cat.gif" alt="팀 배너">
   <p>구매자·판매자 모두를 위한 오픈마켓 플랫폼</p>
   <p>
     <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
