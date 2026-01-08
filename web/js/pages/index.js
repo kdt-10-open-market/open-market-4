@@ -1,26 +1,23 @@
-import { API_BASE_URL } from "../common/config.js";
+import { fetchProducts } from "../common/api.js";
+import { createModal } from "../common/modal.js";
 
-let productData = [];
 
+const modal = await createModal();
 loadProducts();
 
-
-async function loadProducts() {
-  productData = await fetchProducts();
-  renderProductCards();
+export async function loadProducts(searchTerm = "") {
+  const productData = await fetchProducts(searchTerm);
+  renderProductCards(productData);
 }
 
-// GET /api/products 호출하여 상품 목록 표시
-async function fetchProducts(searchTerm = "") {
-  const url = `${API_BASE_URL}/products?page=1&page_size=20${searchTerm ? `&search=${searchTerm}` : ""
-    }`;
-  const response = await fetch(url);
-  const data = await response.json();
-  return data.results;
-}
-
-function renderProductCards() {
+function renderProductCards(productData) {
   const productContainer = document.getElementById("product-container");
+  // 템플릿 제외 모두 삭제
+  Array.from(productContainer.children).forEach((child) => {
+    if (child.tagName.toLowerCase() !== "template") {
+      productContainer.removeChild(child);
+    }
+  });
 
   productData.forEach((data) => {
     const productCard = cloneProductCardElem(data);
@@ -29,6 +26,22 @@ function renderProductCards() {
       window.location.href = `detail.html?id=${data.id}`;
     });
   });
+
+  const firstProductCard = productContainer.querySelector(".product-card");
+  if (!firstProductCard) {
+    const parent = document.body;
+    const content = document.createElement("p");
+    content.textContent = "검색된 상품이 없습니다.";
+    const cancelBtnTxt = null;
+    const confirmBtnTxt = "확인";
+    modal.setModal({
+      parent,
+      content,
+      cancelBtnTxt,
+      confirmBtnTxt
+    });
+    modal.open(() => modal.close());
+  }
 }
 
 function cloneProductCardElem(data) {

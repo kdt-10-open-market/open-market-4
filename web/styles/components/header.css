@@ -41,6 +41,9 @@
 .search-bar {
   display: none;
 }
+.search-bar > svg {
+  cursor: pointer;
+}
 
 /* 아이콘 그룹 */
 .header-icons {

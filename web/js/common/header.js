@@ -1,3 +1,4 @@
+import { loadProducts } from "../pages/index.js";
 import { isLoggedIn, logout } from "./auth.js";
 import { createModal } from "./modal.js";
 
@@ -33,14 +34,12 @@ export async function initHeader() {
         </svg>`;
 
     const searchInput = document.getElementById("search-input");
-    const searchIcon = searchBar.querySelector(".search-icon");
+    const searchIcon = searchBar.querySelector("#search-bar > svg");
 
     const performSearch = () => {
       const query = searchInput.value.trim();
       if (query) {
-        console.log("검색어:", query);
-        // TODO: 실제 검색 기능 구현
-        alert(`"${query}" 검색 기능은 추후 구현 예정입니다.`);
+        loadProducts(query);
       }
     };
 
@@ -48,6 +47,10 @@ export async function initHeader() {
       if (e.key === "Enter") {
         performSearch();
       }
+    });
+
+    searchIcon.addEventListener("click", (e) => {
+      performSearch();
     });
   }
 
